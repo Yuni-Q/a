@@ -16,6 +16,7 @@
 !/log/.keep
 /tmp
 /config/envioronments/development.rb
-/config/initializers/fog.rb
 /config/initializers/omniauth.rb
+/config/application.yml
+# Ignore application configuration
 /config/application.yml
