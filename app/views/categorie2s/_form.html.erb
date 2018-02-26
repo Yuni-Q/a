@@ -1,0 +1,17 @@
+<%= form_for(@categorie2) do |f| %>
+  <% if @categorie2.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@categorie2.errors.count, "error") %> prohibited this categorie2 from being saved:</h2>
+
+      <ul>
+      <% @categorie2.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

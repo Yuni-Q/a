@@ -1,0 +1,11 @@
+<li><%= link_to "배송", "/welcome/post/1" %></li>
+<li><%= link_to "주문/결제", "/welcome/post/2" %></li>
+<li><%= link_to "취소/환불", "/welcome/post/3" %></li>
+<li><%= link_to "회원정보", "/welcome/post/4" %></li>
+<li><%= link_to "이용방법", "/welcome/post/5" %></li>
+<li><%= link_to "기타", "/welcome/post/6" %></li>
+<% @posts.each do |post| %>
+	제목 : <%= post.title %> <br>
+	내용 : <%= post.content %>
+	<br>
+<% end %>

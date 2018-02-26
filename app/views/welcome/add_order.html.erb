@@ -1,0 +1,112 @@
+<% i = 0 %>
+<% @product_ids.each do |product_id| %>
+	<% product = Product.find(product_id) %>
+	<img src="<%= product.img %>" width="100" height="100">,
+	<%= product.name %>, 
+	<%= product.price %>, 
+	<%= product.weight %>, 
+	<%= Categorie1.find(product.categorie1_id).content %>, 
+	<%= Categorie2.find(product.categorie2_id).content %>, 
+	<%= Categorie3.find(product.categorie3_id).content %>, 
+	<%= product.content %>, <%= @donations[i] %>, <%= @numbers[i] %>개
+	<br>
+	<% i = i + 1 %>
+<% end %>
+  제품 가격 : <%= @product_price %>,
+  donation 가격 : <%= @donation_price %>,
+  total 가격 : <%= @total_price %>,
+
+<%= form_for(@order, url: '/welcome/orderCreate') do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <% if current_user.name %>
+      <%= f.text_field :name, value:current_user.name, :required => true %>
+    <% else %> 
+      <%= f.text_field :name, :required => true %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br>
+    <% if current_user.phone %>
+      <%= f.text_field :phone, value:current_user.phone, :required => true %>
+    <% else %>
+      <%= f.text_field :phone, :required => true %>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :phone2 %><br>
+    <%= f.text_field :phone2, :required => true %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br>
+    <%= f.text_field :address, :required => true, class: :address %>
+  </div>
+  <div class="field">
+    <%= f.label :address_detail %><br>
+    <%= f.text_field :address_detail, :required => true, class: :address_detail %>
+  </div>
+  <div class="field">
+    <%= f.label :address_number %><br>
+    <%= f.text_field :address_number, :required => true, class: :address_number %>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_field :content %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :product_ids, value:@product_ids %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :basket_ids, value:@basket_ids %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :numbers, value:@numbers %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :donations, value:@donations %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :donation_price, value:@donation_price %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :product_price, value:@product_price %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :total_price, value:@total_price %>
+  </div>
+  <div class="field">
+    <label><%= f.radio_button :payment_option, '신용카드', class: :rd %> 신용카드</label>
+    <label><%= f.radio_button :payment_option, '실시간계좌이체', :checked => true, class: :rd %> 실시간계좌이체</label>
+    <label><%= f.radio_button :payment_option, '핸드폰결제', class: :rd %> 핸드폰결제제</label>
+  </div>
+    <div class="field">
+    <%= check_box_tag 'order[agreement]', true, false, :required => true %>
+    <%= f.label "주문상품의 구매 조건을 확인하였으며, 이에 동의 합니다." %>
+    <%#= hidden_field_tag 'user[agreement]', 'false', id: "agreement" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<%= link_to 'Back', '/welcome/cart' %>
+<hr>
+<% @address.each do |address| %>
+  <%= address.address %>
+  <%= address.address_detail %>
+  <%= address.address_number %>
+  <button class="add" value="<%= address.address %> <%= address.address_detail %> <%= address.address_number %>">add address</button>
+  <br>
+<% end %>
+
+<script>
+  $(function() {
+    $('.add').click(function(){
+      address = this.value;
+      address = address.split(" ")
+      $('.address').val(address[0])
+      $('.address_detail').val(address[1])
+      $('.address_number').val(address[2])
+    });
+  });
+</script>

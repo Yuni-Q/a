@@ -1,0 +1,33 @@
+<%= form_tag({ controller: :welcome, action: :add_order }) do %>
+	<% @baskets.each do |basket| %>
+		<label><%= check_box_tag 'id', "#{basket.id}", true, class: 'checkbox', id: 'chkBox' %></label>
+		<!-- <input type='checkbox' class='mycheck' value="<%= basket.id %>" />, -->
+		<img src="<%= basket.product.img %>" width="100" height="100">,<%= basket.product.name %>, <%= basket.product.price %>, <%= basket.product.weight %>, <%= Categorie1.find(basket.product.categorie1_id).content %>, <%= Categorie2.find(basket.product.categorie2_id).content %>, <%= Categorie3.find(basket.product.categorie3_id).content %>, <%= basket.product.content %>,
+		<!-- <button class="delete" value="<%= basket.id %>">delete</button> -->
+		<%= number_field_tag "num#{basket.id}", 1, max: 99 %>
+		<label>donation : <%= check_box_tag "#{basket.id}", true, false %></label>,
+		<%= link_to "delete", "/welcome/delete_product/#{basket.id}", method: :delete, data: { confirm: "Are you sure?" } %>
+		<br>
+	<% end %>
+	<hr>
+	<div align="center">
+		<%= hidden_field_tag 'id_list', '', class: 'id_list' %>
+	</div>
+	<br>
+	<div align="center">
+		<input type="submit" class="xxx">
+	</div>	
+<% end %>
+
+<script>
+  	$(function() {
+  		var id = '';
+  		$('.xxx').click(function(){
+	   		$('#chkBox:checked').each(function() {
+	   			id = id + $(this).val() + ' ';
+   			});
+   			$('#id_list').attr('value', id);	
+	   	});	
+  	});
+	
+</script>

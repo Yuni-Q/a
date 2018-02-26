@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  product_id: 
+  number: 1
+  donation: false
+  product_price: 1
+  donation_price: 1
+  total_price: 1
+  address: MyString
+  payment: MyString
+  invoice: MyString
+  parcel: MyString
+  parcel_number: MyString
+
+two:
+  user_id: 
+  product_id: 
+  number: 1
+  donation: false
+  product_price: 1
+  donation_price: 1
+  total_price: 1
+  address: MyString
+  payment: MyString
+  invoice: MyString
+  parcel: MyString
+  parcel_number: MyString

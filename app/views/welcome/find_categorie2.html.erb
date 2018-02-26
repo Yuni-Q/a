@@ -1,0 +1,25 @@
+<% @categorie2.each do |categorie2| %>
+	<button class="categorie2" value="<%= categorie2.content %>"><%= categorie2.content %></button>
+<% end %>
+
+<script>
+	$(function() {
+	    $('.categorie2').click(function(){
+	      categorie2 = this.value;
+	      $.ajax({
+	        method: "POST",
+	        dataType: 'html',
+	        url: "/welcome/find_categorie3",
+	        data: { categorie2: categorie2 },
+	        success: function(data){
+
+	          $("#ajax2").html(data)
+	          
+	        },
+	        error: function(){
+	          alert("실패")
+	        }
+	      });
+	    });
+	});
+</script>

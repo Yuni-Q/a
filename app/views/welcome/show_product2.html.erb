@@ -1,0 +1,181 @@
+ <script>
+  $(function() {
+    var page_scroll_index = 2;
+    $(window).scroll(function() {
+       // 진짜 중요한거!!!!!
+       if($(window).scrollTop() >= $(document).height() - $(window).height()) {
+         $.ajax({
+           method: "GET",
+          url: "<%= scroll_path %>",
+          data: {
+            page: page_scroll_index++
+          }
+         })
+       }
+    });  
+  });
+</script>
+
+
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- <button type="button" class="navbar-toggle" data-toggle="collapse2" data-target=".navbar-collapse"> -->
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">categorie</a>
+    </div>
+    <div class="navbar-collapse collapse2">
+    <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">categorie1<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <% @categorie1.each do |categorie1| %>
+              <li><%= link_to categorie1.content, "/welcome/show_product1/#{categorie1.id}" %></li>
+            <% end %>
+          </ul>
+        </li>
+    </ul>
+  </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="ajax">
+</div>
+<div id="ajax2">
+</div>
+<div>
+  <%= @load.categorie1.content %> -> <%= @load.content %>
+  <br>
+  <% @categorie.each do |categorie| %>
+    <%= link_to categorie.content, "/welcome/show_product3/#{categorie.id}" %>
+  <% end %>
+</div>
+<h2>Best4</h2>
+<% if @array[3] %>
+  <% for i in (0..3) %>
+    <div>
+      <% product = Product.find(@array[i]) %>
+      <img src="<%= product.img %>" width="100" height="100">,
+      <%= product.name %>, <%= product.price %>, 
+      <%= product.weight %>, 
+      <%= Categorie1.find(product.categorie1_id).content %>, 
+      <%= Categorie2.find(product.categorie2_id).content %>, 
+      <%= Categorie3.find(product.categorie3_id).content %>, 
+      <%= product.content %> 
+      좋아요 수 : <span class="<%= product.id %>"><%= @list[product.id] %></span>
+      <button class="add" value="<%= product.id %>">add Cart</button>
+      <button class="like" value="<%= product.id %>">
+        <% if current_user and Follower.find_by(user_id: current_user.id, product_id: product.id) %>
+            좋아요
+        <% else %>
+          싫어요
+        <% end %>
+      </button>
+      <br>
+      <%#= paginate @product %>
+    </div>
+  <% end %>
+<% end %>
+<hr>
+<hr>
+<h2>Product</h2>
+<div id="boxx">
+  <% @product.each do |product| %>
+    <img src="<%= product.img %>" width="100" height="100">,
+    <%= product.name %>, <%= product.price %>, 
+    <%= product.weight %>, 
+    <%= Categorie1.find(product.categorie1_id).content %>, 
+    <%= Categorie2.find(product.categorie2_id).content %>, 
+    <%= Categorie3.find(product.categorie3_id).content %>, 
+    <%= product.content %> 
+    좋아요 수 : <span class="<%= product.id %>"><%= @list[product.id] %></span>
+    <button class="add" value="<%= product.id %>">add Cart</button>
+    <button class="like" value="<%= product.id %>">
+      <% if current_user and Follower.find_by(user_id: current_user.id, product_id: product.id) %>
+          좋아요
+      <% else %>
+        싫어요
+      <% end %>
+    </button>
+    <br>
+  <% end %>
+  <%#= paginate @product %>
+</div>
+
+
+<script>
+  $(function() {
+    $('.categorie1').click(function(){
+      categorie1 = this.value;
+      $.ajax({
+        method: "POST",
+        dataType: 'html',
+        url: "/welcome/find_categorie2",
+        data: { categorie1: categorie1 },
+        success: function(data){
+
+          $("#ajax").html(data)
+          
+        },
+        error: function(){
+          alert("실패")
+        }
+      });
+    });
+  });
+</script>
+<script>
+  $(function() {
+    $('.add').click(function(){
+      product_id = this.value;
+      $.ajax({
+        method: "POST",
+        url: "/welcome/add_cart",
+        data: { product_id: product_id },
+        success: function(){
+
+          alert("추가 되었습니다.")
+          
+        },
+        error: function(){
+          alert("실패")
+        }
+      });
+    });
+  });
+</script>
+<script>
+    $(function(){
+        $('.like').click(function(){
+            product_id = this.value;
+            $.ajax({
+                method: "POST",
+                dataType: 'html',
+                url: "/likes/update",
+                data: { product_id: product_id },
+                success: function(data){
+                  $(".like[value='"+product_id+"']").html(data);
+                },
+                error: function(){
+                alert("무엇인가 잘못 되엇다 !!!");
+                }
+            });
+            $.ajax({
+                method: "POST",
+                dataType: 'html',
+                url: "/likes/count",
+                data: { product_id: product_id },
+                success: function(data){
+                  $("."+product_id).html(data);
+                },
+                error: function(){
+                alert("무엇인가 잘못 되엇다 !!!");
+                }
+            });
+        });
+
+    });
+</script>

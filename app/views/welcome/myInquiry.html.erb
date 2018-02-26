@@ -1,0 +1,12 @@
+<% @inquiries.each do |inquiry| %>
+	<%= inquiry.email %>
+	<%= inquiry.title %>
+	<%= inquiry.content %>
+	<%= inquiry.category %>
+	<%= inquiry.answer %>
+	<%= link_to "delete", "/welcome/delete_inquiry/#{inquiry.id}", method: :delete, data: { confirm: "Are you sure?" } %>
+	<br>
+<% end %>
+<div align="center">
+	<%= link_to "1:1 문의", "/welcome/inquiry" %>
+</div>

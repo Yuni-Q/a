@@ -1,0 +1,69 @@
+
+<%= current_user.email %> 님 
+<br>
+<% if current_user.donation_point == nil %>
+	참여합시다. <br>
+<% else %>
+	자이로의 놀라운 나눔문화에 동참해 보세요. <br>
+<% end %>
+코인 : 
+<% if current_user.point == nil %>
+	0,
+<% else %>
+	<%= current_user.point %>, 
+<% end %>
+나눔 누적 score : 
+<% if current_user.donation_point == nil %>
+	0,
+<% else %>
+	<%= current_user.donation_point %>,
+<% end %>
+<hr>
+
+
+<% @orders.each do |order| %>
+	<%# products = order.product_ids.rstrip.split() %>
+	<%# donations = order.donations.rstrip.split() %>
+	<%# numbers = order.numbers.rstrip.split() %>
+	<% i = 0 %>
+	<% order.product_ids = order.product_ids.split() %>
+	<% if order.product_ids[1] %>
+		<% order.product_ids.each do |product_id| %>
+			<% product = Product.find(product_id) %>
+			<img src="<%= product.img %>" width="100" height="100">,
+			<%= product.name %>, 
+			<%= product.price %>, 
+			<%= product.weight %>, 
+			<%= Categorie1.find(product.categorie1_id).content %>, 
+			<%= Categorie2.find(product.categorie2_id).content %>, 
+			<%= Categorie3.find(product.categorie3_id).content %>, 
+			<%= product.content %>, <%= order.donations[i] %>, <%= order.numbers[i] %>개
+			<br>
+			<% i = i + 1 %>
+		<% end %>
+	<% else %>
+		<% product = Product.find(order.product_ids[0]) %>
+			<img src="<%= product.img %>" width="100" height="100">,
+			<%= product.name %>, 
+			<%= product.price %>, 
+			<%= product.weight %>, 
+			<%= Categorie1.find(product.categorie1_id).content %>, 
+			<%= Categorie2.find(product.categorie2_id).content %>, 
+			<%= Categorie3.find(product.categorie3_id).content %>, 
+			<%= product.content %>, <%= order.donations %>, <%= order.numbers %>개
+			<br>
+	<% end %>
+	주소 : <%= order.address %>,
+	제품 가격 : <%= order.product_price %>,
+	donation 가격 : <%= order.donation_price %>,
+	total 가격 : <%= order.total_price %>,
+	상태 : <%= order.payment %>,
+	송장번호 : <%= order.invoice %>,
+	택배사 : <%= order.parcel %>,
+	택배회사번호 : <%= order.parcel_number %>
+	<br>
+	<% if Order.find(order.id).payment == "배송 완료" %> 
+	<%= link_to "delete", "/welcome/delete_order/#{order.id}", method: :delete, data: { confirm: "Are you sure?" } %>
+	<% end %>
+	<hr>
+<% end %>

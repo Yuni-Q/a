@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Img:</strong>
+  <%= @product.img %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @product.weight %>
+</p>
+
+<p>
+  <strong>Categorie1:</strong>
+  <%= @product.categorie1 %>
+</p>
+
+<p>
+  <strong>Categorie2:</strong>
+  <%= @product.categorie2 %>
+</p>
+
+<p>
+  <strong>Categorie3:</strong>
+  <%= @product.categorie3 %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @product.content %>
+</p>
+
+<p>
+  <strong>Discount:</strong>
+  <%= @product.discount %>
+</p>
+
+<%= link_to 'Edit', edit_product_path(@product) %> |
+<%= link_to 'Back', products_path %>

@@ -1,0 +1,8 @@
+
+$('#boxx').append(
+`
+<% @product.each do |product| %>
+		<img src="<%= product.img %>" width="100" height="100">,<%= product.name %>, <%= product.price %>, <%= product.weight %>, <%= Categorie1.find(product.categorie1_id).content %>, <%= Categorie2.find(product.categorie2_id).content %>, <%= Categorie3.find(product.categorie3_id).content %>, <%= product.content %> <button class="add">add Cart</button><br>
+	<% end %>
+`
+);

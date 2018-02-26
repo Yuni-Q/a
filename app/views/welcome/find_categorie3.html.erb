@@ -1,0 +1,5 @@
+<hr>
+<% @categorie3.each do |categorie3| %>
+	<%= link_to categorie3.content, "/welcome/product/#{categorie3.id}" %><br>
+	<!-- <button class="categorie3" value="<%= categorie3.content %>"><%= categorie3.content %></button> -->
+<% end %>

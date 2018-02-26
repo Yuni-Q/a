@@ -1,0 +1,123 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :marketing_email %><br />
+    <%= hidden_field_tag 'user[marketing_email]', 'false', id: "marketing_email" %>
+    <%= check_box_tag 'user[marketing_email]', true, false %>
+  </div>
+
+  <div class="field">
+    <%= f.label :marketing_phone %><br />
+    <%= hidden_field_tag 'user[marketing_phone]', 'false', id: "marketing_phone" %>
+    <%= check_box_tag 'user[marketing_phone]', true, false %>
+  </div>
+
+  <div class="field">
+    <%= f.label "모두선택" %><br />
+    <%#= hidden_field_tag 'user[agreement]', 'false', id: "agreement" %>
+    <%= check_box_tag 'all', true, false, class: 'allbox', id: 'allBox'  %>
+  </div>
+
+  <div class="field">
+    <%= f.label :agreement %><br />
+    <%#= hidden_field_tag 'user[agreement]', 'false', id: "agreement" %>
+    <%= check_box_tag 'user[agreement]', true, false, class: 'checkbox', id: 'chkBox1' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :information %><br />
+    <%#= hidden_field_tag 'user[information]', 'false', id: "information" %>
+    <%= check_box_tag 'user[information]', true, false, class: 'checkbox', id: 'chkBox2' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :marketing %><br />
+    <%= hidden_field_tag 'user[marketing]', 'false', id: "marketing" %>
+    <%= check_box_tag 'user[marketing]', true, false, class: 'checkbox', id: 'chkBox3' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+<script>
+    $(function() {
+      $("#allBox").on("click", function(){
+        if($("#allBox").prop("checked") ==  true){
+          // 전체 선택하기
+          $("#chkBox1").prop('checked', true) ;
+          $("#chkBox1").attr('checked', true) ;
+          $("#chkBox2").prop('checked', true) ;
+          $("#chkBox2").attr('checked', true) ;
+          $("#chkBox3").prop('checked', true) ;
+          $("#chkBox3").attr('checked', true) ;
+        }else{//($("#allBox").prop("checked")=="false")
+          // 전체 해제하기
+          $("#chkBox1").prop('checked', false) ;
+          $("#chkBox1").attr('checked', false) ; 
+          $("#chkBox2").prop('checked', false) ;
+          $("#chkBox2").attr('checked', false) ; 
+          $("#chkBox3").prop('checked', false) ;
+          $("#chkBox3").attr('checked', false) ;  
+        };
+      });
+      $("#chkBox1").on("click", function(){
+        if($("#chkBox1").prop("checked") ==  false){
+          if($("#allBox").prop("checked") ==  true){
+            $("#allBox").prop('checked', false) ;
+            $("#allBox").attr('checked', false) ; 
+          };
+        };
+      });
+      $("#chkBox2").on("click", function(){
+        if($("#chkBox2").prop("checked") ==  false){
+          if($("#allBox").prop("checked") ==  true){
+            $("#allBox").prop('checked', false) ;
+            $("#allBox").attr('checked', false) ; 
+          };
+        };
+      });
+      $("#chkBox3").on("click", function(){
+        if($("#chkBox3").prop("checked") ==  false){
+          if($("#allBox").prop("checked") ==  true){
+            $("#allBox").prop('checked', false) ;
+            $("#allBox").attr('checked', false) ; 
+          };
+        };
+      });  
+    });
+  
+</script>
