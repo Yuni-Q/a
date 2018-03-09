@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
   after_create :set_default_role, if: Proc.new { User.count > 1 }
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
-
     # user와 identity가 nil이 아니라면 받는다
 
     identity = Identity.find_for_oauth(auth)
@@ -68,6 +67,7 @@ class User < ActiveRecord::Base
 
     if identity.user != user
       identity.user = user
+      binding.pry
       identity.save!
     end
     user

@@ -1,10 +1,12 @@
 source 'https://rubygems.org'
 
+gem 'jquery-rails'
+gem 'simple_form'
 # 카카오 인증
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem "omniauth-google-oauth2"
-gem 'omniauth-kakao'
+gem 'omniauth-kakao', github: 'luciuschoi/omniauth-kakao'
 gem 'omniauth-naver'
 # 페이지 나눔
 gem 'kaminari'
